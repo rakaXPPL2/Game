@@ -1,44 +1,26 @@
-[gd_scene load_steps=17 format=3 uid="uid://brutalis-main"]
+[gd_scene format=3 uid="uid://leta6noevqye"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Environment" uid="uid://city_env_01" path="res://environment/city_environment.tres" id="2_env"]
-[ext_resource type="CameraAttributesPractical" uid="uid://cam_attr_01" path="res://environment/camera_attributes.tres" id="3_cam"]
-[ext_resource type="PackedScene" uid="uid://city_scene" path="res://scenes/world/city.tscn" id="4_city"]
-[ext_resource type="PackedScene" uid="uid://balcony_scene" path="res://scenes/world/balcony.tscn" id="5_balcony"]
-[ext_resource type="Script" path="res://scripts/hero_tower.gd" id="6_hero"]
-[ext_resource type="Material" uid="uid://facade_mat_tower" path="res://environment/facade_tower.tres" id="7_tower_mat"]
-[ext_resource type="Material" uid="uid://facade_mat_far" path="res://environment/facade_far.tres" id="8_far_mat"]
-[ext_resource type="Script" path="res://scripts/cloud_canopy.gd" id="9_cloud"]
-[ext_resource type="PackedScene" uid="uid://player_scene" path="res://scenes/player/player.tscn" id="10_player"]
-[ext_resource type="Script" path="res://scripts/quality_presets.gd" id="11_presets"]
-[ext_resource type="Script" path="res://scripts/debug_overlay.gd" id="12_debug"]
-[ext_resource type="Script" path="res://scripts/photo_mode.gd" id="13_photo"]
+[ext_resource type="Script" uid="uid://b5nawfuv7m7st" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Environment" path="res://environment/city_environment.tres" id="2_env"]
+[ext_resource type="CameraAttributesPractical" path="res://environment/camera_attributes.tres" id="3_cam"]
+[ext_resource type="PackedScene" path="res://scenes/world/city.tscn" id="4_city"]
+[ext_resource type="PackedScene" path="res://scenes/world/balcony.tscn" id="5_balcony"]
+[ext_resource type="Script" uid="uid://cgovu0qtrfxdu" path="res://scripts/hero_tower.gd" id="6_hero"]
+[ext_resource type="Material" path="res://environment/facade_tower.tres" id="7_tower_mat"]
+[ext_resource type="Material" path="res://environment/facade_far.tres" id="8_far_mat"]
+[ext_resource type="Script" uid="uid://cudyw13f6v2cw" path="res://scripts/cloud_canopy.gd" id="9_cloud"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="10_player"]
+[ext_resource type="Script" uid="uid://cbp1kbgcb5xhs" path="res://scripts/quality_presets.gd" id="11_presets"]
+[ext_resource type="Script" uid="uid://de7fgmkw8nbmo" path="res://scripts/debug_overlay.gd" id="12_debug"]
+[ext_resource type="Script" uid="uid://dg16uawh3dhfq" path="res://scripts/photo_mode.gd" id="13_photo"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_Concrete_Dark"]
 albedo_color = Color(0.22, 0.23, 0.26, 1)
-roughness = 1.0
 metallic_specular = 0.0
 
 [sub_resource type="StandardMaterial3D" id="Mat_Glass_Dark"]
 albedo_color = Color(0.05, 0.06, 0.09, 1)
-roughness = 1.0
 metallic_specular = 0.0
-metallic = 0.0
-
-[sub_resource type="StandardMaterial3D" id="Mat_Orange_Glow"]
-albedo_color = Color(1, 0.65, 0.24, 1)
-emission_enabled = true
-emission = Color(1, 0.65, 0.24, 1)
-emission_energy_multiplier = 4.5
-
-[sub_resource type="BoxMesh" id="BoxMesh_Unit"]
-size = Vector3(1, 1, 1)
-
-[sub_resource type="BoxOccluder3D" id="BoxOccluder_FG_Left"]
-size = Vector3(100, 550, 140)
-
-[sub_resource type="BoxOccluder3D" id="BoxOccluder_FG_Right"]
-size = Vector3(95, 450, 120)
 
 [sub_resource type="StyleBoxFlat" id="StyleBox_Debug"]
 bg_color = Color(0.05, 0.06, 0.08, 0.78)
@@ -47,71 +29,58 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=793870830]
 script = ExtResource("1_main")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=315668106]
 environment = ExtResource("2_env")
 camera_attributes = ExtResource("3_cam")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=1347715259]
 transform = Transform3D(-0.939693, 0.160431, -0.299596, 0, 0.882948, 0.469472, 0.34202, 0.441157, -0.8297, 0, 600, 0)
 light_color = Color(1, 0.86, 0.68, 1)
 light_energy = 2.2
 light_volumetric_fog_energy = 2.4
 shadow_enabled = true
-directional_shadow_mode = 2
 directional_shadow_max_distance = 2500.0
 
-[node name="CloudCanopy" type="Node3D" parent="."]
+[node name="CloudCanopy" type="Node3D" parent="." unique_id=571872433]
 script = ExtResource("9_cloud")
 
-[node name="RefCam" type="Marker3D" parent="."]
+[node name="RefCam" type="Marker3D" parent="." unique_id=364352491]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 230, 0)
 
-[node name="Camera3D" type="Camera3D" parent="RefCam"]
+[node name="Camera3D" type="Camera3D" parent="RefCam" unique_id=342877368]
 transform = Transform3D(1, 0, 0, 0, 0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 0, 0)
 current = true
 fov = 62.0
 far = 8000.0
 
-[node name="City" parent="." instance=ExtResource("4_city")]
+[node name="City" parent="." unique_id=486831817 instance=ExtResource("4_city")]
 
-[node name="Foreground" type="Node3D" parent="."]
+[node name="Foreground" type="Node3D" parent="." unique_id=1623205586]
 
-[node name="H_FG_Left" type="Node3D" parent="Foreground"]
+[node name="H_FG_Left" type="Node3D" parent="Foreground" unique_id=1978447368]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -118, 0, -80)
 script = ExtResource("6_hero")
 footprint = Vector2(100, 140)
 total_height = 550.0
-tier_fractions = [Vector3(1, 1, 0.5), Vector3(0.9, 0.9, 0.5)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.5), Vector3(0.9, 0.9, 0.5)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = SubResource("Mat_Concrete_Dark")
 
-[node name="Strip_Upper" type="MeshInstance3D" parent="Foreground/H_FG_Left"]
-transform = Transform3D(4, 0, 0, 0, 120, 0, 0, 0, 4, 50, 430, 60)
-mesh = SubResource("BoxMesh_Unit")
-surface_material_override/0 = SubResource("Mat_Orange_Glow")
-
-[node name="Strip_Lower" type="MeshInstance3D" parent="Foreground/H_FG_Left"]
-transform = Transform3D(4, 0, 0, 0, 130, 0, 0, 0, 4, 50, 140, 60)
-mesh = SubResource("BoxMesh_Unit")
-surface_material_override/0 = SubResource("Mat_Orange_Glow")
-
-[node name="Occluder_FG_Left" type="OccluderInstance3D" parent="Foreground/H_FG_Left"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 275, 0)
-occluder = SubResource("BoxOccluder_FG_Left")
-
-[node name="Balcony" parent="Foreground" instance=ExtResource("5_balcony")]
+[node name="Balcony" parent="Foreground" unique_id=484498146 instance=ExtResource("5_balcony")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -47.5, 217.5, -70)
 
-[node name="H_FG_Right" type="Node3D" parent="Foreground"]
+[node name="H_FG_Right" type="Node3D" parent="Foreground" unique_id=1512179223]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 118, 0, -100)
 script = ExtResource("6_hero")
 footprint = Vector2(95, 120)
-total_height = 450.0
-tier_fractions = [Vector3(1, 1, 0.45), Vector3(0.85, 0.88, 0.35), Vector3(0.72, 0.75, 0.2)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.45), Vector3(0.85, 0.88, 0.35), Vector3(0.72, 0.75, 0.2)])
 ledges_count = 2
-ledge_side = 1
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("7_tower_mat")
 neon_text = "KARANG"
 neon_color = Color(0.95, 0.96, 1, 1)
@@ -119,148 +88,153 @@ neon_side = 1
 neon_y_ratio = 0.72
 seed_id = 102
 
-[node name="Occluder_FG_Right" type="OccluderInstance3D" parent="Foreground/H_FG_Right"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 225, 0)
-occluder = SubResource("BoxOccluder_FG_Right")
+[node name="HeroTowers" type="Node3D" parent="." unique_id=1599927643]
 
-[node name="HeroTowers" type="Node3D" parent="."]
-
-[node name="H_Mid_Left" type="Node3D" parent="HeroTowers"]
+[node name="H_Mid_Left" type="Node3D" parent="HeroTowers" unique_id=2086703523]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -235, 0, -500)
 script = ExtResource("6_hero")
 footprint = Vector2(135, 135)
 total_height = 480.0
-tier_fractions = [Vector3(1, 1, 0.4), Vector3(0.85, 0.85, 0.35), Vector3(0.68, 0.7, 0.25)]
-has_flanking_pylons = true
-has_mid_collar = true
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.4), Vector3(0.85, 0.85, 0.35), Vector3(0.68, 0.7, 0.25)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("7_tower_mat")
 neon_text = "LUMEN"
-neon_color = Color(0.24, 1, 0.78, 1)
-neon_side = 0
 neon_y_ratio = 0.36
 seed_id = 201
 
-[node name="H_Slim_Center" type="Node3D" parent="HeroTowers"]
+[node name="H_Slim_Center" type="Node3D" parent="HeroTowers" unique_id=950202563]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -68, 0, -800)
 script = ExtResource("6_hero")
 footprint = Vector2(60, 60)
 total_height = 390.0
-tier_fractions = [Vector3(1, 1, 0.5), Vector3(0.82, 0.82, 0.3), Vector3(0.65, 0.65, 0.2)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.5), Vector3(0.82, 0.82, 0.3), Vector3(0.65, 0.65, 0.2)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("7_tower_mat")
 neon_text = "SENJA"
 neon_color = Color(1, 0.28, 0.45, 1)
-neon_side = 0
 neon_y_ratio = 0.86
 seed_id = 202
 
-[node name="H_Glass_Black" type="Node3D" parent="HeroTowers"]
+[node name="H_Glass_Black" type="Node3D" parent="HeroTowers" unique_id=1452211258]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 120, 0, -400)
 script = ExtResource("6_hero")
 footprint = Vector2(70, 70)
 total_height = 210.0
-tier_fractions = [Vector3(1, 1, 0.7), Vector3(0.85, 0.85, 0.3)]
-facade_material = SubResource("Mat_Glass_Dark")
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.7), Vector3(0.85, 0.85, 0.3)])
+has_flanking_pylons = null
+has_mid_collar = null
 crown = 0
+facade_material = SubResource("Mat_Glass_Dark")
 seed_id = 203
 
-[node name="H_Mid_Right" type="Node3D" parent="HeroTowers"]
+[node name="H_Mid_Right" type="Node3D" parent="HeroTowers" unique_id=1793193470]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 360, 0, -650)
 script = ExtResource("6_hero")
-footprint = Vector2(100, 100)
 total_height = 420.0
-tier_fractions = [Vector3(1, 1, 0.45), Vector3(0.85, 0.85, 0.35), Vector3(0.7, 0.7, 0.2)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.45), Vector3(0.85, 0.85, 0.35), Vector3(0.7, 0.7, 0.2)])
 ledges_count = 1
 ledge_side = 2
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("7_tower_mat")
 neon_text = "TERAS"
 neon_color = Color(0.31, 0.63, 1, 1)
-neon_side = 0
 neon_y_ratio = 0.35
 seed_id = 204
 
-[node name="H_Far_1" type="Node3D" parent="HeroTowers"]
+[node name="H_Far_1" type="Node3D" parent="HeroTowers" unique_id=133681358]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -420, 0, -1300)
 script = ExtResource("6_hero")
 footprint = Vector2(110, 110)
 total_height = 360.0
-tier_fractions = [Vector3(1, 1, 0.6), Vector3(0.8, 0.8, 0.4)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.6), Vector3(0.8, 0.8, 0.4)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("8_far_mat")
 seed_id = 301
 
-[node name="H_Far_2" type="Node3D" parent="HeroTowers"]
+[node name="H_Far_2" type="Node3D" parent="HeroTowers" unique_id=128186887]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -180, 0, -1600)
 script = ExtResource("6_hero")
 footprint = Vector2(90, 90)
 total_height = 410.0
-tier_fractions = [Vector3(1, 1, 0.55), Vector3(0.8, 0.8, 0.45)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.55), Vector3(0.8, 0.8, 0.45)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("8_far_mat")
 seed_id = 302
 
-[node name="H_Far_3" type="Node3D" parent="HeroTowers"]
+[node name="H_Far_3" type="Node3D" parent="HeroTowers" unique_id=487174089]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 0, -1800)
 script = ExtResource("6_hero")
 footprint = Vector2(105, 105)
 total_height = 420.0
-tier_fractions = [Vector3(1, 1, 0.5), Vector3(0.8, 0.8, 0.5)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.5), Vector3(0.8, 0.8, 0.5)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("8_far_mat")
 seed_id = 303
 
-[node name="H_Far_4" type="Node3D" parent="HeroTowers"]
+[node name="H_Far_4" type="Node3D" parent="HeroTowers" unique_id=435109144]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 260, 0, -1500)
 script = ExtResource("6_hero")
-footprint = Vector2(100, 100)
 total_height = 380.0
-tier_fractions = [Vector3(1, 1, 0.6), Vector3(0.8, 0.8, 0.4)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.6), Vector3(0.8, 0.8, 0.4)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("8_far_mat")
 seed_id = 304
 
-[node name="H_Far_5" type="Node3D" parent="HeroTowers"]
+[node name="H_Far_5" type="Node3D" parent="HeroTowers" unique_id=1342803879]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -310, 0, -1950)
 script = ExtResource("6_hero")
 footprint = Vector2(115, 115)
 total_height = 430.0
-tier_fractions = [Vector3(1, 1, 0.5), Vector3(0.75, 0.75, 0.5)]
+tier_fractions = Array[Vector3]([Vector3(1, 1, 0.5), Vector3(0.75, 0.75, 0.5)])
+has_flanking_pylons = null
+has_mid_collar = null
 facade_material = ExtResource("8_far_mat")
 neon_text = "BLOK-9"
 neon_color = Color(0.86, 0.27, 0.78, 1)
-neon_side = 0
 neon_y_ratio = 0.6
 seed_id = 305
 
-[node name="Player" parent="." instance=ExtResource("10_player")]
+[node name="Player" parent="." unique_id=600321091 instance=ExtResource("10_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 220.5, -68)
 
-[node name="QualityPresets" type="Node" parent="." node_paths=PackedStringArray("world_environment", "sun_light")]
+[node name="QualityPresets" type="Node" parent="." unique_id=559882658 node_paths=PackedStringArray("world_environment", "sun_light")]
 script = ExtResource("11_presets")
 world_environment = NodePath("../WorldEnvironment")
 sun_light = NodePath("../Sun")
 
-[node name="PhotoMode" type="Node" parent="." node_paths=PackedStringArray("player_node", "debug_overlay")]
+[node name="PhotoMode" type="Node" parent="." unique_id=273279430 node_paths=PackedStringArray("player_node", "debug_overlay")]
 script = ExtResource("13_photo")
 player_node = NodePath("../Player")
 debug_overlay = NodePath("../DebugOverlay")
 
-[node name="DebugOverlay" type="CanvasLayer" parent="."]
+[node name="DebugOverlay" type="CanvasLayer" parent="." unique_id=1452157708]
 script = ExtResource("12_debug")
 
-[node name="Panel" type="PanelContainer" parent="DebugOverlay"]
+[node name="Panel" type="PanelContainer" parent="DebugOverlay" unique_id=1383120323]
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 380.0
 offset_bottom = 180.0
 theme_override_styles/panel = SubResource("StyleBox_Debug")
 
-[node name="Margin" type="MarginContainer" parent="DebugOverlay/Panel"]
+[node name="Margin" type="MarginContainer" parent="DebugOverlay/Panel" unique_id=75674276]
 layout_mode = 2
 theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 14
 
-[node name="VBox" type="VBoxContainer" parent="DebugOverlay/Panel/Margin"]
+[node name="VBox" type="VBoxContainer" parent="DebugOverlay/Panel/Margin" unique_id=44749991]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="DebugOverlay/Panel/Margin/VBox"]
+[node name="Label" type="Label" parent="DebugOverlay/Panel/Margin/VBox" unique_id=1242152006]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "[KOTA BRUTALIS DIAGNOSTICS]
