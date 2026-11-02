@@ -131,3 +131,28 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - **Hasil:** `screenshots/phase5.png` membuktikan berkas cahaya diagonal yang anggun menyinari lembah kota brutalis.
 
 ---
+
+## Fase 6 — Pemain dan Mode Foto
+
+**Tanggal:** 2026-11-02
+
+### Keputusan & Implementasi
+- **Pemain First-Person (`scripts/player.gd` & `scenes/player/player.tscn`):**
+  - `CharacterBody3D` dengan kapsul kolisi, gravitasi 9.8 m/s², jalan kaki 3.5 m/s, sprint 7.0 m/s (Shift), lompat 4.5 m/s (Space).
+  - Spawn di atas balkon di `(-45.0, 220.5, -68.0)` menghadap pemandangan kota.
+  - Mouse look dengan penangkap kursor (ESC untuk buka/tutup kursor).
+- **Mode Kamera Bebas (Free Cam / Noclip):**
+  - Tombol `F`: toggle terbang bebas menembus ruang tanpa tabrakan.
+  - Kecepatan terbang diatur via scroll wheel mouse: 50 m/s, 200 m/s, dan 800 m/s.
+  - Kontrol vertikal: E (naik) dan Q (turun).
+- **Mode Foto Sinematik (`scripts/photo_mode.gd`):**
+  - Tombol `P`: toggle sembunyikan semua UI / HUD.
+- **Diagnostik & Debug Overlay (`scripts/debug_overlay.gd`):**
+  - Tombol `F3`: overlay panel menampilkan FPS, frame time (ms), total Draw Calls, jumlah objek, primitives, dan nama preset grafis aktif.
+- **Preset Kualitas Runtime (`scripts/quality_presets.gd`):**
+  - Tombol `1` (Low), `2` (Medium), `3` (High).
+- **Tangkapan Layar Pemain (`screenshot_runner.gd`):**
+  - Tombol `F2`: simpan langsung tangkapan layar beresolusi penuh ke `user://shots/`.
+- **Hasil:** `screenshots/phase6.png` memverifikasi kesiapan kontrol dan penjelajahan level secara lancar.
+
+---

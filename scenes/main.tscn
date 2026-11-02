@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://brutalis-main"]
+[gd_scene load_steps=17 format=3 uid="uid://brutalis-main"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Environment" uid="uid://city_env_01" path="res://environment/city_environment.tres" id="2_env"]
@@ -9,6 +9,10 @@
 [ext_resource type="Material" uid="uid://facade_mat_tower" path="res://environment/facade_tower.tres" id="7_tower_mat"]
 [ext_resource type="Material" uid="uid://facade_mat_far" path="res://environment/facade_far.tres" id="8_far_mat"]
 [ext_resource type="Script" path="res://scripts/cloud_canopy.gd" id="9_cloud"]
+[ext_resource type="PackedScene" uid="uid://player_scene" path="res://scenes/player/player.tscn" id="10_player"]
+[ext_resource type="Script" path="res://scripts/quality_presets.gd" id="11_presets"]
+[ext_resource type="Script" path="res://scripts/debug_overlay.gd" id="12_debug"]
+[ext_resource type="Script" path="res://scripts/photo_mode.gd" id="13_photo"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_Concrete_Dark"]
 albedo_color = Color(0.24, 0.25, 0.28, 1)
@@ -33,6 +37,13 @@ size = Vector3(100, 550, 140)
 
 [sub_resource type="BoxOccluder3D" id="BoxOccluder_FG_Right"]
 size = Vector3(95, 450, 120)
+
+[sub_resource type="StyleBoxFlat" id="StyleBox_Debug"]
+bg_color = Color(0.05, 0.06, 0.08, 0.78)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="Main" type="Node3D"]
 script = ExtResource("1_main")
@@ -211,3 +222,46 @@ neon_color = Color(0.86, 0.27, 0.78, 1)
 neon_side = 0
 neon_y_ratio = 0.6
 seed_id = 305
+
+[node name="Player" parent="." instance=ExtResource("10_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45, 220.5, -68)
+
+[node name="QualityPresets" type="Node" parent="." node_paths=PackedStringArray("world_environment", "sun_light")]
+script = ExtResource("11_presets")
+world_environment = NodePath("../WorldEnvironment")
+sun_light = NodePath("../Sun")
+
+[node name="PhotoMode" type="Node" parent="." node_paths=PackedStringArray("player_node", "debug_overlay")]
+script = ExtResource("13_photo")
+player_node = NodePath("../Player")
+debug_overlay = NodePath("../DebugOverlay")
+
+[node name="DebugOverlay" type="CanvasLayer" parent="."]
+script = ExtResource("12_debug")
+
+[node name="Panel" type="PanelContainer" parent="DebugOverlay"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 380.0
+offset_bottom = 180.0
+theme_override_styles/panel = SubResource("StyleBox_Debug")
+
+[node name="Margin" type="MarginContainer" parent="DebugOverlay/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 14
+
+[node name="VBox" type="VBoxContainer" parent="DebugOverlay/Panel/Margin"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="DebugOverlay/Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "[KOTA BRUTALIS DIAGNOSTICS]
+FPS: 60 (16.6 ms)
+Draw Calls: 0
+Objects: 0
+Primitives: 0
+Quality Preset: Medium"
