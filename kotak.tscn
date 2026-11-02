@@ -1,16 +1,16 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene format=3 uid="uid://e1mov661e0bv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_1"]
 size = Vector3(2, 1, 1)
 
-[node name="root" type="Node3D"]
+[node name="root" type="Node3D" unique_id=1692693852]
 
-[node name="Balok" type="MeshInstance3D" parent="."]
-mesh = SubResource("BoxMesh_1")
+[node name="Balok" type="MeshInstance3D" parent="." unique_id=548163052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_1")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=2073201211]
 transform = Transform3D(1, 0, 0, 0, 0.766, 0.643, 0, -0.643, 0.766, 0, 3, 5)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2128637468]
 transform = Transform3D(0.866, -0.354, 0.354, 0, 0.707, 0.707, -0.5, -0.612, 0.612, 0, 5, 5)
