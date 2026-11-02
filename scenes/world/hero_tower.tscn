@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://hero_tower_scene"]
+
+[ext_resource type="Script" path="res://scripts/hero_tower.gd" id="1_hero"]
+[ext_resource type="Material" uid="uid://facade_mat_tower" path="res://environment/facade_tower.tres" id="2_facade"]
+
+[node name="HeroTower" type="Node3D"]
+script = ExtResource("1_hero")
+facade_material = ExtResource("2_facade")

@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://facade_mat_far"]
+
+[ext_resource type="Shader" path="res://shaders/facade.gdshader" id="1_facade"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_facade")
+shader_parameter/wall_color = Color(0.42, 0.43, 0.46, 1)
+shader_parameter/glass_color = Color(0.04, 0.06, 0.09, 1)
+shader_parameter/lit_color = Color(1, 0.7, 0.35, 1)
+shader_parameter/cell_size = Vector2(4.5, 5)
+shader_parameter/window_fill = 0.5
+shader_parameter/lit_chance = 0.02
+shader_parameter/emission_energy = 0.8
+shader_parameter/band_every = 10.0
+shader_parameter/fade_start = 200.0
+shader_parameter/fade_end = 1200.0

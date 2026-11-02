@@ -59,3 +59,29 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - **Hasil:** `screenshots/phase1.png` lolos verifikasi komposisi, kedalaman, dan atmosfer.
 
 ---
+
+## Fase 2 — Material Fasad dan Menara Hero
+
+**Tanggal:** 2026-11-02
+
+### Keputusan & Implementasi
+- **Shader Fasad (`shaders/facade.gdshader`):**
+  - Menggunakan koordinat dunia (`MODEL_MATRIX * VERTEX`), bukan UV, sehingga jendela tidak melar pada skala instance berbeda.
+  - Parameter: `cell_size = (3.6m, 4.0m)`, `window_fill = 0.58`, `lit_chance = 0.12`, `emission_energy = 3.0`.
+  - Pita beton horizontal (`band_every = 8.0`) tiap 8 lantai.
+  - Anti-moire distance fade: `smoothstep(120, 850, dist)` memudarkan jendela di kejauhan agar tidak bising/moire.
+  - 3 varian material: `facade_tower.tres`, `facade_sprawl.tres`, `facade_far.tres`.
+- **Menara Hero (`scripts/hero_tower.gd`):**
+  - Prosedural bertingkat (setback 2–3 tier).
+  - Pita mekanikal gelap pemisah antar tier.
+  - Rusuk vertikal (pilaster) sudut.
+  - Mahkota atas dengan antena 50m dan lampu aviation merah berkedip (siklus 1.2 detik).
+  - Lengan kantilever menjorok (25–35m).
+- **Papan Neon (`scripts/neon_sign.gd`):**
+  - Teks vertikal bertumpuk (`\n.join`), font size 120–140, outline gelap tipis.
+  - Nilai emisi HDR (multiplier 4.5–5.0) memicu bloom glow ACES.
+  - Teks orisinal sesuai brief: `KARANG` (putih/krem), `SENJA` (merah muda), `LUMEN` (teal), `TERAS` (biru), `BLOK-9` (magenta).
+  - Kerlip mikro berbasis pergeseran fasa sinus.
+- **Hasil:** `screenshots/phase2.png` membuktikan fasad beton brutalis realistis, grid jendela menyala tajam di foreground, memudar halus di midground, dan pendar neon tajam.
+
+---
