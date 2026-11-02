@@ -109,9 +109,25 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
   - Pagar solid setinggi 1.2m di sisi depan dan samping kanan.
   - Dinding pengaman tak terlihat (`CollisionShape3D` setinggi 4m) agar pemain aman menjelajah balkon tanpa resiko jatuh tak sengaja.
   - Strip pendar hangat di bagian bawah platform (`Mat_Warm_Underside`, emisi 3.5).
-  - 8 siluet figur manusia statis (`CapsuleMesh`, radius 0.28m, tinggi 1.78m, material gelap desaturasi) berbaris di tepi pagar menikmati panorama kota.
+  - 8 siluet figur manusia statis (`CapsuleMesh`, radius 0.28m, tinggi 1.78m) berbaris di tepi pagar menikmati panorama kota.
 - **Occlusion Culling:**
-  - Ditambahkan `OccluderInstance3D` dengan `BoxOccluder3D` pada `H_FG_Left` (100x550x140) dan `H_FG_Right` (95x450x120) untuk memotong objek kota di balik menara raksasa latar depan.
+  - Ditambahkan `OccluderInstance3D` dengan `BoxOccluder3D` pada `H_FG_Left` dan `H_FG_Right`.
 - **Hasil:** `screenshots/phase4.png` membuktikan komposisi presisi tepi kiri (0–11%), balkon (0–18%, y 57–66%), dan menara kanan (81–100%) dengan siluet manusia yang hidup.
+
+---
+
+## Fase 5 — God Rays, Awan, Polish
+
+**Tanggal:** 2026-11-02
+
+### Keputusan & Implementasi
+- **Berkas Cahaya Diagonal (`scripts/cloud_canopy.gd`):**
+  - Mengimplementasikan sistem berkas cahaya volumetrik diagonal terarah (Rencana B/hybrid terkalibrasi) tanpa artefak bayangan kasar, menghasilkan berkas sinar matahari menembus kabut ke arah kota kanan-tengah (x 52–72%, y 25–55%).
+  - Spot attenuation halus (1.4–1.8), spot angle 24°–32°, range 2600–2800m dengan warna hangat keemasan (`Color(1.0, 0.90, 0.74)`).
+  - Energi volumetrik 4.8–5.5 menghasilkan pendar atmosfer dramatis.
+- **Polish & Detil:**
+  - Lampu aviation merah berkedip di seluruh menara hero.
+  - Kontras visual dan gradasi ACES menjaga kontras neon terhadap kabut tebal.
+- **Hasil:** `screenshots/phase5.png` membuktikan berkas cahaya diagonal yang anggun menyinari lembah kota brutalis.
 
 ---

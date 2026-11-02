@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://brutalis-main"]
+[gd_scene load_steps=13 format=3 uid="uid://brutalis-main"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Environment" uid="uid://city_env_01" path="res://environment/city_environment.tres" id="2_env"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/hero_tower.gd" id="6_hero"]
 [ext_resource type="Material" uid="uid://facade_mat_tower" path="res://environment/facade_tower.tres" id="7_tower_mat"]
 [ext_resource type="Material" uid="uid://facade_mat_far" path="res://environment/facade_far.tres" id="8_far_mat"]
+[ext_resource type="Script" path="res://scripts/cloud_canopy.gd" id="9_cloud"]
 
 [sub_resource type="StandardMaterial3D" id="Mat_Concrete_Dark"]
 albedo_color = Color(0.24, 0.25, 0.28, 1)
@@ -43,11 +44,14 @@ camera_attributes = ExtResource("3_cam")
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.939693, 0.160431, -0.299596, 0, 0.882948, 0.469472, 0.34202, 0.441157, -0.8297, 0, 600, 0)
 light_color = Color(1, 0.86, 0.68, 1)
-light_energy = 2.0
-light_volumetric_fog_energy = 1.6
+light_energy = 2.2
+light_volumetric_fog_energy = 2.4
 shadow_enabled = true
 directional_shadow_mode = 2
 directional_shadow_max_distance = 2500.0
+
+[node name="CloudCanopy" type="Node3D" parent="."]
+script = ExtResource("9_cloud")
 
 [node name="RefCam" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 230, 0)
