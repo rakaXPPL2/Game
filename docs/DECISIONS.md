@@ -84,9 +84,8 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - **Generator Kota (`scripts/city_generator.gd`):**
   - Grid blok prosedural dengan pembagian 2–4 lot per blok.
   - `FastNoiseLite` (frekuensi 0.0015) memodulasi tinggi bangunan dan sebaran menara mid.
-  - Guard zones: radius 240m di sekitar `RefCam` (tidak ada gedung menutupi kamera) dan footprint semua menara hero (+margin).
+  - Guard zones: radius 240m di sekitar `RefCam` dan footprint semua menara hero.
   - MultiMesh chunking per 256m (`Vector2i`) untuk culling efisien.
-  - Urutan mutlak MultiMesh dipatuhi: `transform_format`, `use_custom_data = true`, `mesh = unit_box`, baru `instance_count`.
   - Sprawl: `cast_shadow = OFF` untuk menjaga performa rendering tetap tinggi.
   - Mid-tower: `cast_shadow = ON` (terpisah) untuk bayangan dramatis di atap sprawl.
   - Detail atap: tangki/antena dengan `visibility_range_end = 900.0`.
@@ -97,5 +96,22 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - **Scene Terpisah (`scenes/world/city.tscn`):**
   - Menggabungkan `CityGenerator` dan `Ground` secara modular.
 - **Hasil:** `screenshots/phase3.png` membuktikan kepadatan kota brutalis yang penuh hingga horizon tanpa lubang kosong.
+
+---
+
+## Fase 4 — Foreground
+
+**Tanggal:** 2026-11-02
+
+### Keputusan & Implementasi
+- **Balkon & Collision (`scenes/world/balcony.tscn`):**
+  - Platform menjorok ukuran 55m x 24m x 5m tebal, menembus menara kiri pada ketinggian y = 217.5m.
+  - Pagar solid setinggi 1.2m di sisi depan dan samping kanan.
+  - Dinding pengaman tak terlihat (`CollisionShape3D` setinggi 4m) agar pemain aman menjelajah balkon tanpa resiko jatuh tak sengaja.
+  - Strip pendar hangat di bagian bawah platform (`Mat_Warm_Underside`, emisi 3.5).
+  - 8 siluet figur manusia statis (`CapsuleMesh`, radius 0.28m, tinggi 1.78m, material gelap desaturasi) berbaris di tepi pagar menikmati panorama kota.
+- **Occlusion Culling:**
+  - Ditambahkan `OccluderInstance3D` dengan `BoxOccluder3D` pada `H_FG_Left` (100x550x140) dan `H_FG_Right` (95x450x120) untuk memotong objek kota di balik menara raksasa latar depan.
+- **Hasil:** `screenshots/phase4.png` membuktikan komposisi presisi tepi kiri (0–11%), balkon (0–18%, y 57–66%), dan menara kanan (81–100%) dengan siluet manusia yang hidup.
 
 ---

@@ -1,0 +1,110 @@
+[gd_scene load_steps=10 format=3 uid="uid://balcony_scene"]
+
+[ext_resource type="Material" uid="uid://facade_mat_tower" path="res://environment/facade_tower.tres" id="1_tower_mat"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_Slab"]
+material = ExtResource("1_tower_mat")
+size = Vector3(55, 5, 24)
+
+[sub_resource type="BoxShape3D" id="BoxShape_Slab"]
+size = Vector3(55, 5, 24)
+
+[sub_resource type="BoxMesh" id="BoxMesh_Railing_Front"]
+material = ExtResource("1_tower_mat")
+size = Vector3(55, 1.2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape_Railing_Front"]
+size = Vector3(55, 1.2, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape_Safety_Wall"]
+size = Vector3(55, 4, 1)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Warm_Underside"]
+albedo_color = Color(1, 0.68, 0.35, 1)
+emission_enabled = true
+emission = Color(1, 0.68, 0.35, 1)
+emission_energy_multiplier = 3.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_Underglow"]
+material = SubResource("Mat_Warm_Underside")
+size = Vector3(54, 0.5, 23)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Silhouette_Person"]
+albedo_color = Color(0.1, 0.11, 0.13, 1)
+roughness = 1.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_Person"]
+material = SubResource("Mat_Silhouette_Person")
+radius = 0.28
+height = 1.78
+
+[node name="Balcony" type="StaticBody3D"]
+
+[node name="SlabMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_Slab")
+
+[node name="SlabCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape_Slab")
+
+[node name="Underglow" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3, 0)
+mesh = SubResource("BoxMesh_Underglow")
+
+[node name="RailingFront" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, -11.75)
+mesh = SubResource("BoxMesh_Railing_Front")
+
+[node name="RailingFrontCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.1, -11.75)
+shape = SubResource("BoxShape_Railing_Front")
+
+[node name="SafetyWallFront" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, -11.8)
+shape = SubResource("BoxShape_Safety_Wall")
+
+[node name="RailingRight" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 0.436364, 0, 1, 0, -1, 0, -1.90735e-08, 27.25, 3.1, 0)
+mesh = SubResource("BoxMesh_Railing_Front")
+
+[node name="RailingRightCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.25, 3.1, 0)
+shape = SubResource("BoxShape_Railing_Front")
+
+[node name="SafetyWallRight" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 27.25, 4.5, 0)
+shape = SubResource("BoxShape_Safety_Wall")
+
+[node name="PeopleSilhouettes" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -10.5)
+
+[node name="Person1" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.2, 0.89, 0)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person2" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0, 0.89, 0.3)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person3" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, 0.89, -0.2)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person4" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.2, 0.89, 0.1)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person5" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1, 0.89, -0.4)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person6" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3, 0.89, 0.2)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person7" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.8, 0.89, 0.0)
+mesh = SubResource("CapsuleMesh_Person")
+
+[node name="Person8" type="MeshInstance3D" parent="PeopleSilhouettes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.9, 0.89, -0.25)
+mesh = SubResource("CapsuleMesh_Person")
