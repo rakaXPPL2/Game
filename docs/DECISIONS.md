@@ -179,3 +179,34 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - Git commit dilakukan rapi di setiap fase secara berurutan.
 
 ---
+
+
+---
+
+## Pembaruan Art Style — Low-Poly Brutalis & Penguatan Struktur Arsitektur
+
+**Tanggal:** 2026-11-02
+
+### Keputusan Seni & Teknis
+
+1. **Shader Fasad Flat-Shaded (`shaders/facade.gdshader`):**
+   - Menggunakan kalkulasi face normal geometris sejati `dFdx(VERTEX)` & `dFdy(VERTEX)` dalam view-space.
+   - Render mode `diffuse_lambert` dengan `specular_disabled` untuk menghadirkan permukaan matte khas beton monolitik brutalis.
+   - Variasi warna diskrit/kuantisasi 3-tone tanpa gradien lembut PBR.
+   - Garis sambungan panel precast modular (`panel_seam`) tajam geometris.
+   - Jendela prosedural dengan pemotongan tajam (hard-edge low-poly grid) dan distance anti-moire fade.
+
+2. **Penguatan Struktur Arsitektur Menara Brutalis (`scripts/hero_tower.gd`):**
+   - **Flanking Pylons:** Kolom penopang vertikal ganda di sisi kiri dan kanan dengan ceruk/tulang punggung (spine) tengah tersembunyi (seperti menara O'NEIL pada referensi).
+   - **Cantilever Gusset Brackets:** Braket penopang diagonal beton bersudut 32° di bawah semua anjungan kantilever (ledges).
+   - **Mid-Collar Belt:** Sabuk kantilever horizontal tebal yang menjorok keluar pada ketinggian tengah menara dengan rusuk struktural.
+
+3. **Struktur Penopang Balkon & Siluet Low-Poly (`scenes/world/balcony.tscn`):**
+   - Menambahkan 3 rangka penopang diagonal (trusses) miring bersudut ~35° di bawah pelat balkon yang mengait kokoh ke dinding menara induk.
+   - Railing modular geometris dengan tiang baluster sudut kokoh.
+   - Sosok manusia siluet diganti menjadi siluet bersegi 5 (pentagonal low-poly cylinder), konsisten dengan estetika low-poly.
+
+4. **Variasi Podiums & Atap Kota (`scripts/city_generator.gd`):**
+   - 35% bangunan sprawl kini memiliki undakan setback bertingkat (podium/setback block) untuk profil siluet brutalis yang kaya.
+   - 25% bangunan sprawl memiliki ruang mesin lift / unit pendingin AC low-poly di atap.
+   - Draw calls tetap sangat hemat: **674 draw calls** (jauh di bawah batas 1500).

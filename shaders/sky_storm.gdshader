@@ -1,11 +1,18 @@
 shader_type sky;
 
-uniform vec3 sky_top_color : source_color = vec3(0.18, 0.20, 0.24);      // awan badai gelap pekat atas
-uniform vec3 sky_mid_color : source_color = vec3(0.32, 0.34, 0.38);      // lapisan awan tengah
-uniform vec3 sky_horizon_color : source_color = vec3(0.65, 0.64, 0.60);  // haze cakrawala hangat pudar
-uniform vec3 cloud_dark_color : source_color = vec3(0.12, 0.13, 0.16);   // gumpalan tebal gelap
-uniform vec3 sun_break_color : source_color = vec3(0.92, 0.86, 0.74);    // celah cahaya hangat
-uniform float cloud_speed = 0.01;
+// ═══════════════════════════════════════════════════════════════
+// SKY LOW-POLY BRUTALIST — Banded cloud masses, hard color steps
+// Awan dibuat dari FBM tapi di-quantize ke step blocks untuk
+// memberi kesan flat-shaded / poster art
+// ═══════════════════════════════════════════════════════════════
+
+uniform vec3 sky_top_color : source_color = vec3(0.16, 0.18, 0.22);
+uniform vec3 sky_mid_color : source_color = vec3(0.30, 0.32, 0.36);
+uniform vec3 sky_horizon_color : source_color = vec3(0.62, 0.61, 0.57);
+uniform vec3 cloud_dark_color : source_color = vec3(0.12, 0.13, 0.16);
+uniform vec3 sun_break_color : source_color = vec3(0.90, 0.84, 0.70);
+uniform float cloud_speed = 0.008;
+uniform float posterize_levels = 6.0; // Quantize cloud tones ke N level
 
 float hash(vec2 p) {
 	p = fract(p * vec2(123.34, 456.21));
@@ -28,7 +35,7 @@ float fbm(vec2 p) {
 	float v = 0.0;
 	float a = 0.5;
 	mat2 rot = mat2(vec2(0.8, 0.6), vec2(-0.6, 0.8));
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 4; i++) { // 4 octaves (reduced from 5 for flat look)
 		v += a * noise(p);
 		p = rot * p * 2.04 + vec2(11.3, 7.1);
 		a *= 0.5;
@@ -36,38 +43,48 @@ float fbm(vec2 p) {
 	return v;
 }
 
+// Quantize / posterize value ke discrete steps
+float posterize(float v, float levels) {
+	return floor(v * levels) / levels;
+}
+
 void sky() {
 	vec3 dir = normalize(EYEDIR);
 	float h = clamp(dir.y, 0.0, 1.0);
-	
-	// Awan FBM
-	vec2 uv = (dir.xz / max(dir.y + 0.10, 0.04)) * 0.3;
-	uv += vec2(TIME * cloud_speed * 0.5, TIME * cloud_speed * 0.2);
-	
-	float n1 = fbm(uv);
-	float n2 = fbm(uv * 2.2 + vec2(5.2, -2.1));
-	float cloud = smoothstep(0.2, 0.8, n1 * 0.6 + n2 * 0.4);
 
-	// Transisi cepat: cakrawala -> mid -> badai gelap pekat di atas
-	vec3 sky_base = mix(sky_horizon_color, sky_mid_color, smoothstep(0.01, 0.14, h));
-	sky_base = mix(sky_base, sky_top_color, smoothstep(0.12, 0.32, h));
-	
-	// Campur gumpalan awan badai gelap pekat
-	vec3 stormy = mix(sky_base, cloud_dark_color, cloud * smoothstep(0.04, 0.25, h) * 0.75);
-	
+	// Awan FBM — lebih besar/kasar untuk low-poly feel
+	vec2 uv = (dir.xz / max(dir.y + 0.10, 0.04)) * 0.2; // Coarser UV
+	uv += vec2(TIME * cloud_speed * 0.5, TIME * cloud_speed * 0.2);
+
+	float n1 = fbm(uv);
+	float n2 = fbm(uv * 1.8 + vec2(5.2, -2.1));
+	float cloud = smoothstep(0.2, 0.75, n1 * 0.6 + n2 * 0.4);
+
+	// ── POSTERIZE cloud: hard tone steps ──
+	cloud = posterize(cloud, posterize_levels);
+
+	// ── SKY GRADIENT: step-banded, bukan smooth ──
+	float band_h = posterize(h, 8.0); // 8 horizon bands
+	vec3 sky_base = mix(sky_horizon_color, sky_mid_color, step(0.08, band_h));
+	sky_base = mix(sky_base, sky_top_color, step(0.22, band_h));
+
+	// Gumpalan awan gelap — flat toned
+	vec3 stormy = mix(sky_base, cloud_dark_color, cloud * step(0.04, h) * 0.72);
+
 	// Arah matahari
 	vec3 sun_dir = LIGHT0_ENABLED ? normalize(LIGHT0_DIRECTION) : normalize(vec3(-0.4, 0.55, -0.73));
 	float sun_dot = max(dot(dir, sun_dir), 0.0);
-	
-	// Celah terang terisolasi di sekitar matahari
-	float sun_glow = pow(sun_dot, 8.0) * 0.45 + pow(sun_dot, 32.0) * 0.6;
-	float sun_cut = (1.0 - cloud * 0.8) * smoothstep(0.04, 0.35, h);
-	
+
+	// Sun glow — posterized
+	float sun_glow = pow(sun_dot, 8.0) * 0.4 + pow(sun_dot, 24.0) * 0.5;
+	sun_glow = posterize(sun_glow, 5.0);
+	float sun_cut = (1.0 - cloud * 0.8) * step(0.04, h);
+
 	vec3 final_color = stormy + sun_break_color * sun_glow * sun_cut;
 
 	if (dir.y < 0.0) {
 		float gh = clamp(-dir.y * 6.0, 0.0, 1.0);
-		COLOR = mix(sky_horizon_color, vec3(0.08, 0.09, 0.11), gh);
+		COLOR = mix(sky_horizon_color, vec3(0.08, 0.09, 0.11), step(0.3, gh));
 	} else {
 		COLOR = final_color;
 	}

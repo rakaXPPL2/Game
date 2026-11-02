@@ -3,7 +3,27 @@
 [sub_resource type="BoxMesh" id="BoxMesh_1"]
 size = Vector3(2, 1, 1)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_1"]
+size = Vector2(20, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1"]
+albedo_color = Color(0.35, 0.35, 0.35, 1)
+roughness = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_floor"]
+size = Vector3(20, 0.1, 20)
+
 [node name="root" type="Node3D" unique_id=1692693852]
+
+[node name="Lantai" type="StaticBody3D" parent="."]
+
+[node name="LantaiMesh" type="MeshInstance3D" parent="Lantai"]
+mesh = SubResource("PlaneMesh_1")
+surface_material_override/0 = SubResource("StandardMaterial3D_1")
+
+[node name="LantaiCollision" type="CollisionShape3D" parent="Lantai"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_floor")
 
 [node name="Balok" type="MeshInstance3D" parent="." unique_id=548163052]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

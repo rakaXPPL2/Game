@@ -5,13 +5,17 @@
 [resource]
 render_priority = 0
 shader = ExtResource("1_facade")
-shader_parameter/wall_color = Color(0.55, 0.51, 0.45, 1)
-shader_parameter/glass_color = Color(0.04, 0.06, 0.09, 1)
-shader_parameter/lit_color = Color(1, 0.7, 0.35, 1)
+shader_parameter/wall_color = Color(0.52, 0.49, 0.44, 1)
+shader_parameter/wall_dark = Color(0.32, 0.31, 0.28, 1)
+shader_parameter/glass_color = Color(0.06, 0.08, 0.12, 1)
+shader_parameter/lit_color = Color(1, 0.72, 0.32, 1)
 shader_parameter/cell_size = Vector2(3.6, 4)
-shader_parameter/window_fill = 0.58
+shader_parameter/window_fill = 0.55
 shader_parameter/lit_chance = 0.12
-shader_parameter/emission_energy = 3.0
+shader_parameter/emission_energy = 2.8
 shader_parameter/band_every = 8.0
 shader_parameter/fade_start = 120.0
 shader_parameter/fade_end = 850.0
+shader_parameter/panel_w = 7.0
+shader_parameter/panel_h = 4.0
+shader_parameter/groove_width = 0.018

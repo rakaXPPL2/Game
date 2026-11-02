@@ -158,6 +158,23 @@ func generate() -> void:
 							_append_instance(sprawl_chunks, chunk_key, t, custom_data)
 							total_sprawl += 1
 
+							# Undakan setback bertingkat untuk siluet brutalis low-poly
+							if rng.randf() < 0.35 and bh > 30.0:
+								var s_w: float = bw * rng.randf_range(0.65, 0.82)
+								var s_d: float = bd * rng.randf_range(0.65, 0.82)
+								var s_h: float = bh * rng.randf_range(0.25, 0.45)
+								var st := Transform3D(Basis.from_scale(Vector3(s_w, s_h, s_d)), Vector3(lx, bh + s_h * 0.5, lz))
+								_append_instance(sprawl_chunks, chunk_key, st, custom_data)
+								total_sprawl += 1
+
+							# Kotak utilitas atap (ruang mesin elevator / AC chiller)
+							if rng.randf() < 0.25:
+								var rw: float = bw * rng.randf_range(0.2, 0.35)
+								var rd: float = bd * rng.randf_range(0.2, 0.35)
+								var rh: float = rng.randf_range(4.0, 10.0)
+								var rt := Transform3D(Basis.from_scale(Vector3(rw, rh, rd)), Vector3(lx + rng.randf_range(-bw * 0.15, bw * 0.15), bh + rh * 0.5, lz + rng.randf_range(-bd * 0.15, bd * 0.15)))
+								_append_instance(roof_chunks, chunk_key, rt, custom_data)
+
 			x += block_w + road_w
 			block_idx_x += 1
 
