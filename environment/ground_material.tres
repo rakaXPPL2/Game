@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ground_mat_01"]
+
+[ext_resource type="Shader" path="res://shaders/ground.gdshader" id="1_ground"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ground")
+shader_parameter/asphalt_color = Color(0.082, 0.09, 0.106, 1)
+shader_parameter/road_line_color = Color(0.45, 0.42, 0.35, 1)
+shader_parameter/street_light_color = Color(1, 0.65, 0.25, 1)
+shader_parameter/road_grid_size = 90.0
+shader_parameter/road_width = 14.0
+shader_parameter/light_density = 0.08

@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://city_scene"]
+
+[ext_resource type="Script" path="res://scripts/city_generator.gd" id="1_city_gen"]
+[ext_resource type="Material" uid="uid://ground_mat_01" path="res://environment/ground_material.tres" id="2_ground_mat"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_Ground"]
+material = ExtResource("2_ground_mat")
+size = Vector2(10000, 10000)
+
+[node name="City" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_Ground")
+
+[node name="CityGenerator" type="Node3D" parent="."]
+script = ExtResource("1_city_gen")
