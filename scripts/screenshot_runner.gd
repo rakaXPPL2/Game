@@ -21,11 +21,28 @@ func _ready() -> void:
 	if shot_name.is_empty():
 		return  # mode normal, tidak otomatis screenshot
 
+	# Terapkan preset sesuai argumen jika ada
+	var main_node: Node = get_tree().root.get_node_or_null("Main")
+	if main_node:
+		var qp: Node = main_node.get_node_or_null("QualityPresets")
+		if qp and qp.has_method("apply_preset"):
+			if preset_name.to_lower() == "low":
+				qp.apply_preset(0)
+			elif preset_name.to_lower() == "high":
+				qp.apply_preset(2)
+			else:
+				qp.apply_preset(1)
+
 	print("[ScreenshotRunner] Menunggu %d frame sebelum screenshot '%s' (preset: %s)" \
 		% [WAIT_FRAMES, shot_name, preset_name])
 
 	for i: int in range(WAIT_FRAMES):
 		await get_tree().process_frame
+
+	var dc: int = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_DRAW_CALLS_IN_FRAME)
+	var objs: int = RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TOTAL_OBJECTS_IN_FRAME)
+	var fps: float = Engine.get_frames_per_second()
+	print("[ScreenshotRunner] Profil Performa: FPS=%.1f | DrawCalls=%d | Objects=%d" % [fps, dc, objs])
 
 	_take_screenshot(shot_name)
 	get_tree().quit()

@@ -156,3 +156,26 @@ Dokumen ini mencatat semua keputusan teknis yang diambil selama pengerjaan proye
 - **Hasil:** `screenshots/phase6.png` memverifikasi kesiapan kontrol dan penjelajahan level secara lancar.
 
 ---
+
+## Fase 7 — Optimasi dan Dokumentasi
+
+**Tanggal:** 2026-11-02
+
+### Keputusan & Hasil Profiling Performa
+
+| Pengukuran | Nilai Terukur | Target Spesifikasi Brief | Status |
+|---|---|---|---|
+| **Total Draw Calls (Medium)** | **616** | < 1.500 | ✅ Sangat Efisien (41% dari batas) |
+| **Total Objek Render (Medium)** | **700** | < 2.000 | ✅ Lolos |
+| **Jumlah Bangunan Sprawl** | **4.845** | 4.000 – 12.000 | ✅ Lolos |
+| **Jumlah Menara Mid** | **246** | 100 – 300 | ✅ Lolos |
+| **Cincin Siluet Horizon** | **850 instance** | ~800 | ✅ Lolos |
+| **Preset Kualitas 1 / 2 / 3** | Low, Medium, High aktif | 3 Preset berfungsi | ✅ Lolos |
+| **Kepatuhan Checklist Bagian 9** | 8/8 poin terpenuhi | Semua kriteria lolos | ✅ Lolos |
+
+### Dokumentasi Lengkap
+- `README.md` diperbarui dengan petunjuk instalasi, eksekusi perintah, pemetaan tombol, tabel preset, dan peta arsitektur pohon folder.
+- `tools/compare.py` disediakan untuk analisis keselarasan warna grid 8x6.
+- Git commit dilakukan rapi di setiap fase secara berurutan.
+
+---

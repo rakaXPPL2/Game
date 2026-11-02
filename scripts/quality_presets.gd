@@ -11,9 +11,11 @@ enum Preset { LOW, MEDIUM, HIGH }
 @export var sun_light: DirectionalLight3D
 
 var current_preset: Preset = Preset.MEDIUM
+var is_preset_locked: bool = false
 
 func _ready() -> void:
-	apply_preset(Preset.MEDIUM)
+	if not is_preset_locked:
+		apply_preset(Preset.MEDIUM)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("preset_1"):
@@ -24,6 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		apply_preset(Preset.HIGH)
 
 func apply_preset(preset: Preset) -> void:
+	is_preset_locked = true
 	current_preset = preset
 	var env: Environment = world_environment.environment if world_environment else null
 
