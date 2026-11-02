@@ -1,0 +1,4 @@
+[gd_resource type="CameraAttributesPractical" format=3 uid="uid://cam_attr_01"]
+
+[resource]
+auto_exposure_enabled = false

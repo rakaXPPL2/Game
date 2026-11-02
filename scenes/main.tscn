@@ -1,3 +1,166 @@
-[gd_scene format=3 uid="uid://brutalis-main"]
+[gd_scene load_steps=12 format=3 uid="uid://brutalis-main"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Environment" uid="uid://city_env_01" path="res://environment/city_environment.tres" id="2_env"]
+[ext_resource type="CameraAttributesPractical" uid="uid://cam_attr_01" path="res://environment/camera_attributes.tres" id="3_cam"]
+
+[sub_resource type="StandardMaterial3D" id="Mat_Ground"]
+albedo_color = Color(0.08, 0.09, 0.11, 1)
+roughness = 0.95
+
+[sub_resource type="PlaneMesh" id="Mesh_Ground"]
+material = SubResource("Mat_Ground")
+size = Vector2(10000, 10000)
+
+[sub_resource type="StandardMaterial3D" id="Mat_Concrete_Light"]
+albedo_color = Color(0.55, 0.52, 0.45, 1)
+roughness = 0.85
+
+[sub_resource type="StandardMaterial3D" id="Mat_Concrete_Dark"]
+albedo_color = Color(0.25, 0.26, 0.29, 1)
+roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="Mat_Glass_Dark"]
+albedo_color = Color(0.04, 0.05, 0.07, 1)
+roughness = 0.15
+metallic = 0.4
+
+[sub_resource type="StandardMaterial3D" id="Mat_Orange_Glow"]
+albedo_color = Color(1, 0.65, 0.24, 1)
+emission_enabled = true
+emission = Color(1, 0.65, 0.24, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="StandardMaterial3D" id="Mat_Neon_Teal"]
+albedo_color = Color(0.24, 1, 0.78, 1)
+emission_enabled = true
+emission = Color(0.24, 1, 0.78, 1)
+emission_energy_multiplier = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_Unit"]
+size = Vector3(1, 1, 1)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("2_env")
+camera_attributes = ExtResource("3_cam")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.939693, 0.160431, -0.299596, 0, 0.882948, 0.469472, 0.34202, 0.441157, -0.8297, 0, 600, 0)
+light_color = Color(1, 0.86, 0.68, 1)
+light_energy = 2.4
+light_volumetric_fog_energy = 2.2
+shadow_enabled = true
+directional_shadow_mode = 2
+directional_shadow_max_distance = 2500.0
+
+[node name="RefCam" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 230, 0)
+
+[node name="Camera3D" type="Camera3D" parent="RefCam"]
+transform = Transform3D(1, 0, 0, 0, 0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 0, 0)
+current = true
+fov = 62.0
+far = 8000.0
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("Mesh_Ground")
+
+[node name="BlockoutTowers" type="Node3D" parent="."]
+
+[node name="H_FG_Left" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(100, 0, 0, 0, 550, 0, 0, 0, 140, -118, 260, -80)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="Strip_Upper" type="MeshInstance3D" parent="BlockoutTowers/H_FG_Left"]
+transform = Transform3D(0.04, 0, 0, 0, 0.22, 0, 0, 0, 0.03, 0.51, 0.22, 0.42)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Orange_Glow")
+
+[node name="Strip_Lower" type="MeshInstance3D" parent="BlockoutTowers/H_FG_Left"]
+transform = Transform3D(0.04, 0, 0, 0, 0.24, 0, 0, 0, 0.03, 0.51, -0.28, 0.42)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Orange_Glow")
+
+[node name="Balcony_Left" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(34, 0, 0, 0, 5, 0, 0, 0, 22, -58, 218, -70)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="H_FG_Right" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(95, 0, 0, 0, 450, 0, 0, 0, 120, 118, 215, -100)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="Ledge_1" type="MeshInstance3D" parent="BlockoutTowers/H_FG_Right"]
+transform = Transform3D(0.35, 0, 0, 0, 0.04, 0, 0, 0, 0.3, -0.55, 0.16, 0.05)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="Ledge_2" type="MeshInstance3D" parent="BlockoutTowers/H_FG_Right"]
+transform = Transform3D(0.38, 0, 0, 0, 0.04, 0, 0, 0, 0.3, -0.56, -0.12, 0.05)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="H_Mid_Left" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(135, 0, 0, 0, 460, 0, 0, 0, 135, -235, 230, -500)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="Mid_Left_Neon" type="MeshInstance3D" parent="BlockoutTowers/H_Mid_Left"]
+transform = Transform3D(0.04, 0, 0, 0, 0.22, 0, 0, 0, 0.04, 0.51, -0.18, 0.2)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Neon_Teal")
+
+[node name="H_Slim_Center" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(60, 0, 0, 0, 390, 0, 0, 0, 60, -68, 195, -800)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="H_Glass_Black" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(70, 0, 0, 0, 210, 0, 0, 0, 70, 120, 105, -400)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Glass_Dark")
+
+[node name="H_Mid_Right" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(100, 0, 0, 0, 420, 0, 0, 0, 100, 360, 210, -650)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Light")
+
+[node name="H_Far_1" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(110, 0, 0, 0, 360, 0, 0, 0, 110, -420, 180, -1300)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="H_Far_2" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(90, 0, 0, 0, 410, 0, 0, 0, 90, -180, 205, -1600)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="H_Far_3" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(105, 0, 0, 0, 420, 0, 0, 0, 105, 40, 210, -1800)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="H_Far_4" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(100, 0, 0, 0, 380, 0, 0, 0, 100, 260, 190, -1500)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="H_Far_5" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(115, 0, 0, 0, 430, 0, 0, 0, 115, -310, 215, -1950)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="Sprawl_Foreground" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(900, 0, 0, 0, 35, 0, 0, 0, 500, 0, 17.5, -350)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
+
+[node name="Sprawl_Mid" type="MeshInstance3D" parent="BlockoutTowers"]
+transform = Transform3D(2000, 0, 0, 0, 45, 0, 0, 0, 1200, 0, 22.5, -1100)
+mesh = SubResource("BoxMesh_Unit")
+surface_material_override/0 = SubResource("Mat_Concrete_Dark")
